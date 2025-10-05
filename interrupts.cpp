@@ -5,10 +5,10 @@
  *
  */
 
-#include<interrupts.hpp>
+#include "interrupts.hpp"
 
 int main(int argc, char** argv) {
-
+    std::cout << "Hello, World!" << std::endl;
     //vectors is a C++ std::vector of strings that contain the address of the ISR
     //delays  is a C++ std::vector of ints that contain the delays of each device
     //the index of these elemens is the device number, starting from 0
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
         /************************************************************************/
 
     }
-
+    
     input_file.close();
 
     write_output(execution);
