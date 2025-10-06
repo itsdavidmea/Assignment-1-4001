@@ -20,13 +20,13 @@ int main(int argc, char **argv)
     std::string execution; //!< string to accumulate the execution output
 
     /******************ADD YOUR VARIABLES HERE*************************/
-    int mode_bit = 1; // when 1 = user mode, when 2 = kernel mode
+  
     int time_of_event = 0;
-    int context_save_time = 10;
+    int context_save_time = 30;
     int previous_CPU_time;
     int isr_activity_time = 40;
     
-    std::string previous_activity = "";
+
 
     /******************************************************************/
 
@@ -40,10 +40,7 @@ int main(int argc, char **argv)
        
         if (activity == "CPU")
         {
-            if (mode_bit == 1)
-            {
-                mode_bit = 0;
-            }
+          
 
           
             
@@ -63,7 +60,7 @@ int main(int argc, char **argv)
             // 104, 40, transfer data from device to memory
             // 144, 376, check for errors
             time_of_event += previous_CPU_time;
-            auto [isr_syscall_execution_string, current_time] = intr_boilerplate(time_of_event, duration_intr, 10, vectors);
+            auto [isr_syscall_execution_string, current_time] = intr_boilerplate(time_of_event, duration_intr, context_save_time, vectors);
             time_of_event = current_time;
             execution += isr_syscall_execution_string;
 
@@ -81,7 +78,7 @@ int main(int argc, char **argv)
             
 
 
-            previous_activity = "SYSCALL";
+           
         }
 
         if (activity == "END_IO")
@@ -94,11 +91,11 @@ int main(int argc, char **argv)
             // 612, 416, check device status
 
             time_of_event += previous_CPU_time;
-            auto [isr_endio_execution_string, current_time] = intr_boilerplate(time_of_event, duration_intr, 10, vectors);
+            auto [isr_endio_execution_string, current_time] = intr_boilerplate(time_of_event, duration_intr, context_save_time, vectors);
 
             execution += isr_endio_execution_string;
             time_of_event = current_time;
-            previous_activity = "END_IO";
+           
 
             execution += std::to_string(time_of_event ) + ", " + std::to_string(isr_activity_time) + ", " + "ENDIO: run the ISR (device driver)\n";
             time_of_event += isr_activity_time;

@@ -120,8 +120,7 @@ std::pair<std::string, int> intr_boilerplate(int current_time, int intr_num, int
     current_time++;
 
 
-    //there is stuff here 
-
+ 
 
     execution += std::to_string(current_time) + ", " + std::to_string(1) + ", load address " + vectors.at(intr_num) + " into the PC\n";
     current_time++;
